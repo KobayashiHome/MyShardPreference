@@ -15,7 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     private EditText mKey, mValue;
-    private Button mSave,mRead;
+    private Button mSave, mRead;
 
     private EditText mrKey;
     private TextView mrValue;
@@ -45,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
                 String key = mKey.getText().toString().trim();
                 String value = mValue.getText().toString().trim();
 
-                SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("skylinelin", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                SharedPreferencesUtil.getmInStance().put(MainActivity.this, key, value);
 
-                editor.putString(key, value);
-                //异步存储
-                editor.apply();
+//                SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("skylinelin", MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//
+//                editor.putString(key, value);
+//                //异步存储
+//                editor.apply();
             }
         });
 
@@ -59,9 +61,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //读取相应key的value
-                String key = mrKey.getText().toString().trim();
-                SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("skylinelin", MODE_PRIVATE);
-                String value = sharedPreferences.getString(key, "没有内容");
+                String rkey = mrKey.getText().toString().trim();
+                // SharedPreferences sharedPreferences = MainActivity.this.getSharedPreferences("skylinelin", MODE_PRIVATE);
+//                String value = sharedPreferences.getString(key, "没有内容");
+
+                String value = (String) SharedPreferencesUtil.getmInStance().get(MainActivity.this, rkey, "kong");
 
                 mrValue.setText(value);
             }
